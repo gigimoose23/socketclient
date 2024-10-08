@@ -54,11 +54,13 @@ export type DisconnectionData = {
 	Socket: string?
 }
 -----------------------------------------------
-local SOCKET_SERVER_URL = "http://66.94.113.204:6214" --You can change this if you self host
+local SOCKET_SERVER_URL = "" --You can change this if you self host
 -----------------------------------------------
 local WSS_PATTERN = "^wss://[%w%.]"
 -----------------------------------------------
-
+function Reader:SetSocketURL(link:string)
+	SOCKET_SERVER_URL = link
+end
 function Reader:ValidateWSSLink<T>(link: string?, ...: any?): boolean
 	assert(link, Errors.EMPTY_WSS_LINK_TO_VALIDATE)
 	assert(typeof(link) == "string", string.format(Errors.INVALID_ARGUMENT_TYPE, "link", "string", typeof(link)))
@@ -76,7 +78,7 @@ function Reader:Connect<T>(socket: string?, ...: any?)
 	if ValidLink == false then
 		return error(self:FormatText(`Invalid socket link passed. Their format is: wss://hostname/path.`))
 	end
-	local Response : RequestResponse = HttpService:RequestAsync({
+	local Response : RequestResponse = request({
 		Url = `{SOCKET_SERVER_URL}{Dictionary.Connection}`,
 		Method = "POST",
 		Headers = {
@@ -103,7 +105,7 @@ end
 function Reader:Disconnect<T>(id: string?, ...: any?): boolean
 	local ValidID = true
 	
-	local Response : RequestResponse = HttpService:RequestAsync({
+	local Response : RequestResponse = request({
 		Url = `{SOCKET_SERVER_URL}{Dictionary.Disconnection}`,
 		Method = "POST",
 		Headers = {
@@ -127,7 +129,7 @@ function Reader:Disconnect<T>(id: string?, ...: any?): boolean
 	end
 end
 function Reader:Send<T>(id: string?, message: string?, ...): boolean
-	local Response : RequestResponse = HttpService:RequestAsync({
+	local Response : RequestResponse = request({
 		Url = `{SOCKET_SERVER_URL}{Dictionary.Send}`,
 		Method = "POST",
 		Headers = {
@@ -151,7 +153,7 @@ function Reader:Send<T>(id: string?, message: string?, ...): boolean
 	end
 end
 function Reader:Get<T>(id: string?, ...): any
-	local Response : RequestResponse = HttpService:RequestAsync({
+	local Response : RequestResponse = request({
 		Url = `{SOCKET_SERVER_URL}{Dictionary.Get}`,
 		Method = "POST",
 		Headers = {
@@ -175,7 +177,7 @@ function Reader:Get<T>(id: string?, ...): any
 	end
 end
 function Reader:GetErrors<T>(id: string?, ...): any
-	local Response : RequestResponse = HttpService:RequestAsync({
+	local Response : RequestResponse = request({
 		Url = `{SOCKET_SERVER_URL}{Dictionary.GetErrors}`,
 		Method = "POST",
 		Headers = {
