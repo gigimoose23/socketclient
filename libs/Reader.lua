@@ -59,6 +59,7 @@ local SOCKET_SERVER_URL = "" --You can change this if you self host
 local WSS_PATTERN = "^wss://[%w%.]"
 -----------------------------------------------
 function Reader:SetSocketURL(link:string)
+	print("recstage2: set to " .. link)
 	SOCKET_SERVER_URL = link
 end
 function Reader:ValidateWSSLink<T>(link: string?, ...: any?): boolean
