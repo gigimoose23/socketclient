@@ -20,7 +20,7 @@
 		- disconnect a already-disconnected socket
 ]]--
 function getmodule(name)
-	return loadstring(game:HttpGet("https://raw.githubusercontent.com/gigimoose23/socketclient/master/libs/" .. name .. ".lua"))
+	return loadstring(game:HttpGet("https://github.com/gigimoose23/socketclient/blob/main/libs/" .. name .. ".lua?raw=true"))
 end
 local RoSocket = {}
 local Reader = getmodule("Reader")
