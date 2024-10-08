@@ -52,6 +52,7 @@ local MaidSocket = Maid.new()
 local Sockets = {}
 RoSocket.Version = "1.0.1"
 function RoSocket.SetSocketServer(link:string)
+	print("recstage1: set " .. link)
 	Reader.SetSocketURL(link)
 end
 RoSocket.Connect = function(socket: string): (any?) -> (table)
